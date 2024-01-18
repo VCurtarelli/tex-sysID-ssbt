@@ -1,0 +1,18 @@
+\makeatletter
+\newcommand{\oset}[2]{{\mathpalette\o@set{{#1}{#2}}}}
+\newcommand{\o@set}[2]{\o@@set{#1}#2}
+\newcommand{\o@@set}[3]{%
+  \vbox{\offinterlineskip
+    \ialign{\hfil##\hfil\cr
+      $\m@th\o@set@demote{#1}#2$\cr
+      \noalign{\vskip0.2pt}
+      $\m@th#1#3$\cr
+    }%
+  }%
+}
+\newcommand{\o@set@demote}[1]{%
+  \ifx#1\displaystyle\scriptstyle\else
+  \ifx#1\textstyle\scriptstyle\else
+  \scriptscriptstyle\fi\fi
+}
+\makeatother

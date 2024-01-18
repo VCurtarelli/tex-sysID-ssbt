@@ -1,0 +1,18 @@
+%% Requires:
+% Fontspec
+% Unicode-math
+
+%% Fontspec fonts
+\setmainfont{CMU Serif}
+\setmonofont{Cousine}
+%
+\newfontfamily\tgpfont{TeX Gyre Pagella}
+\newcommand\tgp[1]{{\tgpfont\symbol{#1}}}
+\newfontfamily\arialfont{Arial}
+\newcommand\org{\arialfont\color{DarkGreen}}
+
+%% Unicode-math fonts
+\setmathfont{Asana Math}
+\setmathfont{Latin Modern Math}[range={cal,bfcal,\ast,\circledast}]
+\setmathfont{TeX Gyre DejaVu Math}[range={scr,bfscr, sfit->it,\prime}]
+%

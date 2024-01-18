@@ -1,0 +1,34 @@
+%\pgfplotsset{
+%    table/myStyleWithMeta/.style={    
+%        meta=Label, 
+%    }
+%}
+
+{\footnotesize
+\begin{subfigure}{0.5\linewidth}% resA
+%\centering
+\tikzsetnextfilename{beam_heatmap_CTF_STFT}
+\begin{tikzpicture}
+    \begin{heatmap}{\meshcols}[colorbar to name={2_beamHM_CTF_STFT}]
+		\addplot3[surf, mesh/cols=\meshcols, mesh/rows=\meshrows, shader=interp] table[x=ang, y=freq, z=val, col sep=comma] {figures/results/CTF_STFT/beam_CTF_STFT.csv};
+    \end{heatmap}
+\end{tikzpicture}
+\vspace*{-2mm}\caption{STFT}
+\label{subfig:2_beam_heatmap_CTF_STFT}
+\vspace*{2mm}
+\end{subfigure}
+}\\\noindent
+{\footnotesize
+\begin{subfigure}{0.5\linewidth}% resA
+%\centering
+\tikzsetnextfilename{beam_heatmap_MTF_STFT}
+\begin{tikzpicture}
+    \begin{heatmap}{\meshcols}[colorbar to name={2_beamHM_CTF_SSBT}]
+		\addplot3[surf, mesh/cols=\meshcols, mesh/rows=\meshrows, shader=interp] table[x=ang, y=freq, z=val, col sep=comma] {figures/results/CTF_SSBT/beam_CTF_SSBT.csv};
+    \end{heatmap}
+\end{tikzpicture}
+\vspace*{-2mm}\caption{N-SSBT}
+\label{subfig:2_beam_heatmap_CTF_SSBT}
+\vspace*{2mm}
+\end{subfigure}
+}

@@ -1,0 +1,82 @@
+%% Requires:
+% Fontspec.sty
+% basics.tex
+% oset.tex
+
+%% Renew forall symbol
+% BEGIN_FOLD%
+    \ABD{
+        \let\oforall\forall
+        \def\Sym@fa{\text{$\symsfup{A}$}}
+        \MakeSymbol{\forall}{
+            ~\raisebox{\heightof{\Sym@fa}}{\scalebox{0.72}[-0.9]{\Sym@fa}~}
+        }
+    }
+%END_FOLD
+
+%% Renew complex-unity 'j' symbol
+% BEGIN_FOLD
+    \newfontfamily\cmusuifont{CMU Serif Upright Italic}
+    \newcommand{\cmusui}[1]{{\cmusuifont#1}}
+%
+    \MakeSymbol{\j}{\text{%
+        \cmusui{j}}%
+    }
+% END_FOLD
+
+
+\MakeSymbol{\-}{
+    \text{-}
+}
+\MakeSymbol{\dg}{^{\symsfup{o}}}
+\MakeSymbol{\eqc}{\text{,}}
+\MakeSymbol{\eqp}{\text{.}}
+\MakeSymbol{\eqsc}{\text{;}}
+\MakeSymbol{\dd}{\symsfup{d}}
+
+%\makeatletter
+%\NewDocumentCommand{\SI}{m}{%
+%    \text{#1}%
+%}
+%\NewDocumentCommand{\MakeSI}{m G{#1}}{%
+%    \ABD{\@namedef{#1}{\SI{#2}}}
+%}
+%\makeatother
+%\MakeSI{cm}
+%\MakeSI{cm}
+%\MakeSI{dB}
+%\MakeSI{Hz}
+%\MakeSI{kilo}{k}
+
+
+\MakeSymbol{\defas}{%
+    \mathbin{\oset{\raisebox{1pt}{\scalebox{0.6}[0.6]{$\triangle$}}}{=}}%
+}
+\MakeSymbol{\div}{%
+    \mathbin{//}%
+}
+\MakeSymbol{\mod}{%
+    \mathbin{\%}%
+}
+\MakeSymbol{\kp}{%
+    \mathbin{\otimes}%
+}
+\MakeSymbol{\conv}{%
+    \mathbin{\ast}%
+}
+\MakeSymbol{\bconv}{%
+	\mathbin{\circledast}%
+}
+\MakeSymbol{\vbconv}{%
+	\mathbin{\rharpoon{\circledast}}%
+}
+
+\MakeSymbol{\PM}{
+	\mathbin{\ooalign{\raisebox{1.5pt}{\scalebox{0.8}{$+$}}\cr\hfil\raisebox{-1.5pt}{\scalebox{0.8}{$-$}}\hfil}}
+}
+
+\MakeSymbol{\bsquare}{\fcolorbox{black}{black}{\null}}
+
+\NewDocumentCommand{\vs}{}{%
+	\emph{vs}
+}

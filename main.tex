@@ -1,0 +1,50 @@
+\documentclass{article} 
+
+\usepackage{fontspec} 
+\usepackage{anyfontsize}
+%\usepackage{amsmath, amsfonts, amsthm}
+\let\amvec\vec
+\usepackage{unicode-math}
+\let\umvec\vec
+\input{setup/a0.fonts.tex}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{algorithmicx}
+\usepackage{array}
+\usepackage{textcomp}
+\usepackage{stfloats}
+
+\input{setup/a1.setup.tex}
+
+\addbibresource{setup/d0.references.bib}
+\addbibresource{setup/d1.ext_references.bib}
+\begin{document}
+% \setcounter{footnote}{-1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{parts/1.Definitions.tex}
+%
+\input{parts/2.FilterBanks.tex}
+%
+\input{parts/3.ProblemModeling.tex}
+%
+\input{parts/4.DistortionlessSSBT.tex}
+%
+\input{parts/5.Simulation.tex}
+%
+\input{parts/6.Conclusion.tex}
+%
+\appendix\newpage
+%
+% \input{parts/2.steering_vector.tex}
+%
+% \input{parts/4.anna.tex}
+% \bibliography{setup/d0.references.bib,setup/d1.ext_references.bib}
+% \appendix
+% \input{parts/A.ssb_inverse.tex}
+
+% TODO: Add more metrics?
+% TODO: Add anechoic simulation?
+\end{document}
+

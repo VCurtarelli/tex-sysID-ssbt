@@ -1,0 +1,18 @@
+%% Requires:
+% Algorithm
+% Algorithmicx
+% Algpseudocode
+
+\renewcommand{\thealgorithm}{\arabic{algorithm}}
+
+\algrenewcommand\algorithmicrequire{\textbf{Input:}}
+\algrenewcommand\algorithmicensure{\textbf{Output:}}
+\algrenewcommand\algorithmicprocedure{\textbf{Procedure:}}
+\algrenewcommand\Procedure{\item[\algorithmicprocedure]}
+\def\algcommsymb{$\#$ }
+\algrenewcommand\algorithmiccomment[1]{ \hfill{\color{Gray} \algcommsymb \textit{#1}}}
+\def\att{\leftarrow}
+\NewDocumentCommand{\LineComment}{m}{\item[{\color{Gray} \algcommsymb \textit{#1}}]}
+
+\DeclareMathOperator{\Len}{len}
+\NewDocumentCommand{\len}{m}{\Len\pts{#1}}

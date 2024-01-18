@@ -1,0 +1,65 @@
+\makeatletter
+\newcommand{\Sym@tr}{\symsfup{T}}
+\newcommand{\Sym@he}{\symsfup{H}}
+\newcommand{\tr}[1]{#1^{\Sym@tr}}
+\newcommand{\he}[1]{#1^{\Sym@he}}
+%
+\NewDocumentCommand{\Sym@inv}{O{1}}{
+	\myminus\mkern-2mu \symsfup{#1}
+}
+\NewDocumentCommand{\inv}{s O{1} m}{
+	\IfBooleanTF{#1}{
+		\bts{#3}^{\Sym@inv[#2]}
+	}{
+		#3^{\Sym@inv[#2]}
+	}
+}
+\NewDocumentCommand{\invt}{m}{
+	#1^{\Sym@inv[T]}
+}
+%
+\NewDocumentCommand{\Sym@pinv}{!o}{
+	\cross[#1]
+}
+\NewDocumentCommand{\pinv}{o m}{
+	#2^{\Sym@pinv[#1]}
+}
+\NewDocumentCommand{\pinvR}{m}{
+	#1^{\Sym@pinv[R]}
+}
+\NewDocumentCommand{\pinvL}{m}{
+	#1^{\Sym@pinv[L]}
+}
+
+\LetLtxMacro{\Sqrt}{\sqrt}
+\RenewDocumentCommand{\sqrt}{m}{
+	#1^{\nfrac{1}{2}}
+}
+%\NewDocumentCommand{\isqrt}{m}{
+%	\inv[\nfrac{1}{2}]{#1}
+%}
+%
+\newcommand{\Sym@spr}{'}
+\let\p\Sym@spr
+\makeatother
+
+\newcommand{\crossU}{ }%
+\NewDocumentCommand{\cross}{!o}{%
+	\IfValueT{#1}{\def\crossU{#1}}
+	\mathpalette\docross\relax
+}%
+\newcommand{\docross}[2]{%
+	\ooalign{%
+   		\raise0.15em\hbox{\scalebox{0.6}[1]{$#1\symsfup{-}$}}\cr
+   		\hfil$#1\stretchrel*{\vert}{M}$\hfil\cr
+   	}#1_{\scalebox{0.5}{$\symsfup{\crossU}$}}%
+}%
+\newcommand{\myminus}{\mathpalette\domyminus\relax}%
+\newcommand{\domyminus}[2]{%
+	\scalebox{0.7}[1]{$#1\,\symsfup{-}$}
+}%
+
+\DeclareMathOperator{\Trace}{tr}
+\NewDocumentCommand{\trace}{m}{%
+	\Trace\pts{#1}%
+}

@@ -1,0 +1,227 @@
+%% Requires:
+% PGFPlots
+
+%BEGIN_FOLD
+\usepgfplotslibrary{external}
+\usepgfplotslibrary{polar}
+\newlength{\Yaxisshift}
+\setlength{\Yaxisshift}{3.8cm}
+
+%\usetikzlibrary{external}
+%\tikzexternalize
+%\tikzsetexternalprefix{figures/tikz_ext/}
+
+\NewDocumentEnvironment{polar}{}{
+	\begin{polaraxis}[
+		%BEGIN_FOLD
+		xtick = {
+			0,
+			30,
+			60,
+			90,
+			120,
+			150,
+			180,
+			210,
+			240,
+			270,
+			300,
+			330
+		},
+		xticklabels = {
+			$0\dg$,
+			$30\dg$,
+			$60\dg$,
+			$90\dg$,
+			$120\dg$,
+			$150\dg$,
+			$\PM180\dg$,
+			$-150\dg$,
+			$-120\dg$,
+			$-90\dg$,
+			$-60\dg$,
+			$-30\dg$
+		},
+		ymax=0, ymin=\ymin,
+		rotate=-90,
+		width=0.75\linewidth,
+		height=0.75\linewidth,
+		x dir=reverse,
+		xticklabel style={anchor=-\tick-90},
+		y coord trafo/.code=\pgfmathparse{##1-\ymin},
+		y coord inv trafo/.code=\pgfmathparse{##1\ymin},
+		yticklabel={$\pgfmathprintnumber{\tick}\dB$},
+		yticklabel style={anchor=west, xshift=\Yaxisshift+1ex},
+		y axis line style={yshift=\Yaxisshift},
+		ytick style={yshift=\Yaxisshift},
+		ytick align=outside,
+		ytick = {0, -20, ..., \ymin},
+		ylabel={$\abs{\beam}$ (dB)},
+		ylabel style={xshift=\Yaxisshift, yshift=0.16\linewidth},
+		%END_FOLD
+	]
+}{
+	\end{polaraxis}
+}
+%END_FOLD
+
+%BEGIN_FOLD
+\usepgfplotslibrary{colorbrewer}
+\NewDocumentEnvironment{heatmap}{m m O{}}{
+	\begin{axis}[
+		colormap/viridis,
+		colorbar horizontal,
+		colorbar style={
+			colormap/viridis,
+			width=0.4\linewidth,
+			xlabel = {#2},
+			xtick = {0, 5, ..., 15},
+			xticklabel style={
+				/pgf/number format/.cd,
+				fixed,
+				%title=,
+				precision=0,
+				fixed zerofill,
+			},
+			major tick length=4pt,
+			xtick style={black},
+			xtick pos=top,
+			extra x tick style = {major x tick style={draw=none}},
+			point meta min=-0,
+			point meta max=15,
+		},
+		width=1.15\linewidth,
+		height=0.8\linewidth,
+		point meta min= -0.1,
+		point meta max=15.1,
+		mesh/cols=#1,
+%		mesh/rows=#2,
+%		xlabel={Angle ($\dg$)},
+%		xlabel style = {anchor=north,%
+%						yshift=0.7\linewidth-1.5em,%
+%						},
+		view={0}{90},
+		xtick = {0, 1, ..., \tmax},
+		xtick style = {black},
+		xticklabel style = {yshift=-3pt},
+%		xticklabel={$\pgfmathprintnumber{\tick}\dg$},
+		grid style = {draw=none},
+%		ylabel = {$f$ ($\kilo\Hz$)},
+		ylabel style={yshift=-1.05\linewidth+0.2em},
+		ytick = {0, 2, ..., 8},
+		major tick length=2pt,
+		ytick style = {black},
+		ytick pos = left,
+		mesh/ordering=x varies,
+		#3
+		]
+}{
+	\end{axis}
+}
+%END_FOLD
+
+\newlength{\wdtwenty}
+\setlength{\wdtwenty}{\widthof{$-20$}}
+%\setlength{\wdtwenty}{\widthof{-20}}
+\pgfplotsset{
+    every colorbar global/.append style={
+        zmin=,zmax=,
+    }
+}
+
+%BEGIN_FOLD
+\NewDocumentEnvironment{lineplot}{m O{}}{
+	\begin{axis}[
+		width=0.6\linewidth,
+		height=0.36\linewidth,
+		%
+		xtick = {1, 2 ,..., 7},
+		xtick pos=bottom,
+%		ytick align=outside,
+		ytick pos=left,
+		%
+		xlabel = {Freq. ($\si{\kilo\hertz}$)},
+		ylabel = {#1},
+%		yticklabel style={text width=\wdtwenty, align=right},
+		ylabel style={yshift=-0.6\linewidth+0.8em},
+		%
+		xmin = \fmin,
+		xmax = \fmax,
+		%
+%		legend pos={outer south},
+		%
+		legend cell align={left},
+		legend style={
+			fill=white,
+%			fill opacity=0.6,
+			draw opacity=1,
+			text opacity=1,
+			at={(0.5, -0.5)},
+			anchor=north,
+			legend columns=6
+		},
+		#2
+	]
+	\draw[ultra thin, dotted] (axis cs:\pgfkeysvalueof{/pgfplots/xmin},0) -- (axis cs:\pgfkeysvalueof{/pgfplots/xmax},0);
+}{
+	\end{axis}
+}
+%END_FOLD
+
+%BEGIN_FOLD
+\tikzstyle{axis} = [
+	black
+]
+\tikzstyle{resA} = [
+	thick, ColA, dash pattern = {on 1pt off 0pt},
+	mark=square*, mark size=1, mark options={
+		rotate=0,
+		solid,
+	}
+]
+\tikzstyle{resB} = [
+	thick, ColB, dash pattern = {on 2pt off 1pt},
+	mark=triangle*, mark size=1.5, mark options={
+		rotate=0,
+		solid,
+	}
+]
+\tikzstyle{resC} = [
+	thick, ColC, dash pattern = {on 2pt off 2pt},
+	mark=star, mark size=2, mark options={
+		rotate=0,
+		solid,
+		very thick
+	}
+]
+\tikzstyle{resD} = [
+	thick, ColD, dash pattern = {on 2pt off 3pt},
+	mark=square*, mark size=1.2, mark options={
+		rotate=45,
+		solid,
+	}
+]
+\tikzstyle{resE} = [
+	thick, ColE, dash pattern = {on 3pt off 1pt},
+	mark=triangle*, mark size=1.5, mark options={
+		rotate=180,
+		solid,
+	}
+]
+\tikzstyle{resF} = [
+	thick, ColF, dash pattern = {on 3pt off 2pt},
+	mark=x, mark size=2, mark options={
+		rotate=0,
+		solid,
+		very thick
+	}
+]
+\tikzstyle{resG} = [
+	thick, ColG, dash pattern = {on 3pt off 4pt},
+	mark=+, mark size=2, mark options={
+		rotate=0,
+		solid,
+		very thick
+	}
+]
+%END_FOLD

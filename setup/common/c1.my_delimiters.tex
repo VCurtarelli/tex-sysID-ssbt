@@ -1,0 +1,30 @@
+% Requires:
+%   xparse
+%   cellspace
+
+\newcommand{\pts}[1]{\udel{#1}}
+\newcommand{\bts}[1]{\udel[{[}]{#1}[{]}]}
+\newcommand{\cts}[1]{\udel[{\{}]{#1}[{\}}]}
+\newcommand{\abs}[1]{\udel[|]{#1}[|]}
+\newcommand{\norm}[1]{\udel[\lVert]{#1}[\rVert]}
+\newsavebox{\jcsboxA}
+\newsavebox{\jcsboxB}
+\makeatletter
+\newlength{\udel@lenA}
+\newlength{\udel@lenB}
+\NewDocumentCommand{\udel}{O{(} m O{)}}{%
+%	\if@display
+%		\left#1 #2 \right#3
+%	\else
+%        \setlength{\udel@lenA}{\heightof{$#2$}}
+%        \setlength{\udel@lenB}{\heightof{$#1 #3$}}
+%        \ifdim\udel@lenA>\udel@lenB
+%            \big#1 #2 \big#3
+%        \else
+%            #1 #2 #3
+%        \fi
+%    \fi
+	\left#1 #2 \right#3
+}%
+\makeatother
+

@@ -1,0 +1,28 @@
+\DeclareDocumentCommand{\added}{o m}{%
+    {%TC:ignore
+    \color{LimeGreen} \IfValueT{#1}{\textit{[#1]} }%
+    %TC:endignore
+    #2}%
+}
+\DeclareDocumentCommand{\removed}{o m}{%
+    {%TC:ignore
+    \color{Red} \IfValueT{#1}{\textit{[#1]} }%
+    %TC:endignore
+    \sout{#2}}%
+}
+\DeclareDocumentCommand{\changed}{o m m}{%
+    {%TC:ignore
+    \color{Orange} \IfValueT{#1}{\textit{[#1]} }\textit{\sout{#2}}%
+    %TC:endignore
+    #3}%
+}
+
+% \DeclareDocumentCommand{\added}{o m}{%
+%     #2%
+% }
+% \DeclareDocumentCommand{\removed}{o m}{%
+%     #2%
+% }
+% \DeclareDocumentCommand{\changed}{o m m}{%
+%     #3%
+% }

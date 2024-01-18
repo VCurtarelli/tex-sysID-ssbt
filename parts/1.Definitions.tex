@@ -1,0 +1,32 @@
+\section{Continuous frequency transforms}
+
+Let $x(t)$ denote the time-domain signal, and $X_{\F}(\w)$ be its frequency-domain equivalent through the Fourier transform.
+
+Let $X_{\S}(\w)$ be the real Fourier (RF) transform of $x(t)$, with the RF transform being defined as
+%
+\begin{equations}
+    \RFT{x(t)}
+    & \equiv \Sqrt{2} \, \real{X_{\F}(\w) e^{\j\pi\frac{3}{4}}} \\
+    & = \real{X_{\F}(\w)} - \imag{X_{\F}(\w)}  \\
+    & = X_{\F}^{\Re}(\w) - X_{\F}^{\Im}(\w)
+\end{equations}
+and its inverse being represented as
+%
+\begin{equations}
+    \IRFT{X_{\S}(\w)}
+    & \equiv \Sqrt{2} \, \real{\IFT{X_{\S}(\w) e^{-\j\pi\frac{3}{4}}}[]}
+\end{equations}
+
+Also let $h(t)$ the impulse-response of an LTI system under study, with $H_{\F}(\w)$ and $H_{\S}(\w)$ its Fourier and RF transforms. Denoting $y(t) = h(t) \ast x(t)$ as the output of the desired LTI system when $x(t)$ is its input, then it's trivial that
+%
+\begin{equation}
+    Y_{\F}(\w) = H_{\F}(\w) X_{\F}(\w)
+\end{equation}
+
+However, as previously shown, for the RF transform this equality doesn't hold. Nevertheless, it can be used to approximate the expected result from the Fourier transform, and although it isn't strictly the same, could lead to useful results. % One possible application is in filter banks, where there're already distortions from the low count of frequency bands.
+
+\subsection{Short-time discrete transforms}
+
+We define the Single Sideband Transform (SSBT) similarly to the RF transform, but using the Short-Time Fourier Transform (STFT) instead of the Fourier transform. The STFT is denoted by $\STFT{x[n]}$, and the SSBT by $\SSBT{x[n]}$, with $l$ being the window index and $k$ the bin index.
+
+In this framework, we can study the LTI system through the lenses of filter banks, in the case where the filter bank is being critically downsampled (that is, we have the same number of frequency bins as the length of the windows in the windowing process).

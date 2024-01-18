@@ -1,0 +1,159 @@
+\section{True-distortionless MVDR beamformer with SSBT}
+\label{sec4:true_distortionless_mvdr_ssbt}
+
+Firstly, it is important to note that the convolution theorem isn't respected within the SSBT domain, and therefore any filter obtained through it must first be converted into the STFT domain (or any other appropriate domain) before being applied to a signal.
+
+Although the MVDR beamformer for the SSBT can be obtained directly from the derivation that resulted in \cref{eq:sec3:mvdr_beamformer}, it isn't guaranteed to be truly distortionless, since it would result in no distortion for $\bvd{x}[k]$ in the SSBT domain, but no in the STFT domain. Given the necessity of transforming from the SSBT to the STFT to apply the filter, this should be taken into account when designing a true-distortionless MVDR beamformer with the SSBT.
+
+Given the signal $x[n]$, its STFT $X_{\F}[l,k]$ and its SSBT $X_{\S}[l,k]$, we can easily convert from one to the other, using
+\begin{equation}
+	\label{eq:apA:conversion_SSBT_to_STFT}
+	\hat{X}_{\F}[l,k] = \frac{1}{\Sqrt{2}}\pts{ e^{\j\pi\frac{3}{4}} X_{\S}[l,k] + e^{-\j\pi\frac{3}{4}} X_{\S}[l, K-k] }
+\end{equation}
+where we use the fact that the SSBT will have as many bins\footnote{\Cref{eq:apA:conversion_SSBT_to_STFT} breaks for $k=0$ (since this would expect there to be $K+1$ bins in $X_{\S}[l,k]$) and $k=\nicefrac{K}{2}$ if $K$ is even. However, in those cases the STFT is real, and therefore we can use the "naive" SSBT.} as there're samples in the analysis windows ($K$), and the STFT has only $\floor{\frac{K+1}{2}+1}$ bins.
+
+In this proposed framework, we consider both conjugate-frequencies simultaneously, given that they aren't independent. As such, we define $\bvy'[l,k]$ as
+\begin{equation}
+	\bvy{}'[l,k] = \begin{bmatrix}
+		\bvy{}[l,k] \\ \bvy{}[l, K-k]
+	\end{bmatrix}\SubSize{2M}{1}
+\end{equation}
+and also $\bvv{}'[l,k]$ similarly, from which we define $\Corr{\bvv{}'}[l,k]$. Here, our filter $\bvf{}'[l,k]$ is a $\sz{2M}{1}$ vector, from which we will later calculate the real one, using that
+\begin{equation}
+	\bvf{}'[l,k] = \begin{bmatrix}
+		\bvf{}[l,k] \\
+		\bvf{}[l,K-k]
+	\end{bmatrix}
+\end{equation}
+where $\bvf{}[l,k]$ is our filter for the $k$-th bin, and $\bvf{}[l, K-k]$ is for the $[K-k]$-th bin.
+
+Defining $\tilde{\bvA}$ as
+\begin{equation}
+	\tilde{\bvA} = \begin{bmatrix}
+		\frac{e^{\j\pi\frac{3}{4}}}{\Sqrt{2}} & 0 & \cdots & 0  & \frac{e^{-\j\pi\frac{3}{4}}}{\Sqrt{2}} & 0 & \cdots & 0\\
+		0 & \frac{e^{\j\pi\frac{3}{4}}}{\Sqrt{2}} & \cdots & 0  & 0 & \frac{e^{-\j\pi\frac{3}{4}}}{\Sqrt{2}} & \cdots & 0\\
+		\vdots & \vdots & \ddots & \vdots & \vdots & \ddots & \vdots  \\
+		0 & 0 & \cdots & \frac{e^{\j\pi\frac{3}{4}}}{\Sqrt{2}} & 0 & 0 & \cdots & \frac{e^{-\j\pi\frac{3}{4}}}{\Sqrt{2}}
+	\end{bmatrix}\SubSize{M}{2M}
+\end{equation}
+then, with \cref{eq:apA:conversion_SSBT_to_STFT}, it is easy to see that
+\begin{equation}
+	\hat{\bvf}_{\F}[l,k] = \tilde{\bvA} \bvf{}'[l,k]
+\end{equation}
+with $\hat{\bvf}_{\F}[l,k]$ being the desired beamformer, converted into the STFT domain. From this, the distortionless constraint becomes
+\begin{equations}
+	\he{\hat{\bvf}_{\F}}[l,k] \hat{\bvd}_{\F;x}[k] & = 1 \\
+	\he{\bvf{}'}[l,k] \he{\tilde{\bvA}} \hat{\bvd}_{\F;x}[k] & = 1 \\
+	\he{\bvf{}'}[l,k] \bvD{x}[k] & = 1
+\end{equations}
+with
+\begin{equation}
+	\bvD{x}[k] = \he{\tilde{\bvA}} \hat{\bvd}_{\F;x}[k]
+\end{equation}
+
+In this scheme, our minimization problem becomes
+\begin{equation}
+	\label{eq:sec4:minimization_true_mvdr_ssbt}
+	\bvf{}'^\star[l,k] = \min_{\bvf{}'[l,k]}~ \he{\bvf{}'}[l,k] \Corr{\bvv{}'}[l,k] \bvf{}'[l,k]~\text{s.t.}~\he{\bvf{}'}[l,k] \bvD{x}[k] = 1
+\end{equation}
+whose solution is
+\begin{equation}
+	\bvf{}'^\star[l,k] = \frac{ \Corr{\bvv{}'}[l,k] \bvD{x}[k] }{ \he{\bvD{x}}[k] \Corr{\bvv{}'}[l,k] \bvD{x}[k] }
+\end{equation}
+
+% BEGIN_FOLD
+% it as
+%\begin{equation}
+%	\begin{split}
+%		\bvf{\S}^\star[l,k],~\bvf{\S}^\star[l,K-k] = 
+%		& \min_{\substack{\bvf{\S}[l,k] \\ \bvf{\S}[l,K-k]}}~ \begin{matrix}\he{\bvf{\S}}[l,k] \Corr{\S;\bvv}[l,k] \bvf{\S}[l,k] \\+ \he{\bvf{\S}}[l,K-k] \Corr{\S;\bvv}[l,K-k] \bvf{\S}[l,K-k]\end{matrix} \\
+%		& \text{s.t.}~\he{\hat{\bvf}_{\F}}[l,k] \hat{\bvd}_{\F;x}[k] = 1
+%	\end{split}
+%\end{equation}
+%in which $\hat{\bvf}_{\F}[l,k]$ is the STFT-equivalent of the SSBT beamformer (from \cref{eq:apA:conversion_SSBT_to_STFT}), and $\hat{\bvd}_{\F;x}[k]$ is the STFT-equivalent of $\bvd_{\S;x}[k]$, for which we have that $\hat{\bvd}_{\F;x}[k] = \bvd{\F;x}[k]$.
+%
+%\subsection{Proposed approach}
+%We define $\bvF{\S}[l,k]$ and $\bvP{\S;\bvv}[l,k]$ as
+%\begin{subgather}
+%	\bvF{\S}[l,k] =
+%	\begin{bmatrix}
+%		\bvf{\S}[l,k] \\
+%		\bvf{\S}[l,K-k]
+%	\end{bmatrix}\SubSize{2M}{1} \\
+%	\bvP{\S;\bvv}[l,k] = 
+%	\begin{bmatrix}
+%		\Corr{\S;\bvv}[l,k] & \symbf{0} \\
+%		\symbf{0} & \Corr{\S;\bvv}[l,K-k]
+%	\end{bmatrix}\SubSize{2M}{2M}
+%\end{subgather}
+%
+%With this, we can write
+%\begin{equation}
+%	\hat{\bvf}_{\F}[l,k] = \tilde{\bvA} \bvF{\S}[l,k]
+%\end{equation}
+%in which
+%\begin{equation}
+%	\tilde{\bvA} = \begin{bmatrix}
+%		\frac{e^{\j\pi\frac{3}{4}}}{\Sqrt{2}} & 0 & \cdots & 0  & \frac{e^{-\j\pi\frac{3}{4}}}{\Sqrt{2}} & 0 & \cdots & 0\\
+%		0 & \frac{e^{\j\pi\frac{3}{4}}}{\Sqrt{2}} & \cdots & 0  & 0 & \frac{e^{-\j\pi\frac{3}{4}}}{\Sqrt{2}} & \cdots & 0\\
+%		\vdots & \vdots & \ddots & \vdots & \vdots & \ddots & \vdots  \\
+%		0 & 0 & \cdots & \frac{e^{\j\pi\frac{3}{4}}}{\Sqrt{2}} & 0 & 0 & \cdots & \frac{e^{-\j\pi\frac{3}{4}}}{\Sqrt{2}}
+%	\end{bmatrix}\SubSize{M}{2M}
+%\end{equation}
+%and then the distortionless constraint becomes
+%\begin{equations}
+%	\he{\hat{\bvf}_{\F}}[l,k] \hat{\bvd}_{\F;x}[k] & = 1 \\
+%	\he{\bvF}_{\S}[l,k] \he{\tilde{\bvA}} \hat{\bvd}_{\F;x}[k] & = 1 \\
+%	\he{\bvF}_{\S}[l,k] \bvD{x}[k] & = 1
+%\end{equations}
+%with
+%\begin{equation}
+%	\bvD{x}[k] = \he{\tilde{\bvA}} \hat{\bvd}_{\F;x}[k]
+%\end{equation}
+%
+%Therefore, the minimization problem can be rewritten as
+%\begin{equation}
+%		\bvF{\S}^\star[l,k] = \min_{\bvF{\S}[l,k]}~ \he{\bvF}_{\S}[l,k] \bvP{\S;\bvv}[l,k] \bvF{\S}[l,k]~\text{s.t.}~\he{\bvF{\S}}[l,k] \bvD{x}[k] = 1
+%\end{equation}
+%whose solution is
+%\begin{equation}
+%	\bvF{\S}^\star[l,k] = \frac{ \inv{\bvP{\S;\bvv}}[l,k] \bvD{x}[k] }{ \he{\bvD{x}}[k]\inv{\bvP{\S;\bvv}}[l,k] \bvD{x}[k] }
+%\end{equation}
+%
+%In this formulation, we end up with a beamformer $\bvF{\S}^\star[l,k]$ which is complex (since $\bvD{x}[k]$ is complex), defeating the purpose of using the SSB transform, which is real.
+% END_FOLD
+\subsection{Real-valued SSBT true-MVDR beamformer}
+
+The previous formulation generates a beamformer $\bvf{}'^\star[l,k]$ which is complex (since $\bvD{x}[k]$ is complex), defeating the purpose of using the SSB transform, which is real. Thus, another restriction must be added in order to ensure this behavior. However, adding this restriction to the problem can (further) compromise the noise reduction capacity.
+
+From the distortionless constraint in \cref{eq:sec4:minimization_true_mvdr_ssbt}, we trivially have that
+\begin{subalign}
+	\he{\bvf{}'}[l,k] \, \real{\bvD{x}}[k] & = 1 \\
+	\he{\bvf{}'}[l,k] \, \imag{\bvD{x}}[k] & = 0
+\end{subalign}
+which we can put in matrix form,
+\begin{equation}
+	\he{\bvf{}'}[l,k] \bvQ{x}[k] = \tr{\bvi}
+\end{equation}
+with
+\begin{subgather}
+	\bvQ{x}[k] = \tup{\real{\bvD{x}}[k] , \imag{\bvD{x}}[k]}\SubSize{2M}{2} \\
+	\bvi =
+	\begin{bmatrix}
+		1 \\ 0
+	\end{bmatrix}
+\end{subgather}
+
+From this, the minimization problem from \cref{eq:sec4:minimization_true_mvdr_ssbt} can be rewritten as
+\begin{equation}
+	\bvf{}'^\star[l,k] = \min_{\bvf{}'[l,k]}~ \he{\bvf{}'}[l,k] \bvP{\S;\bvv}[l,k] \bvf{}'[l,k]~\text{s.t.}~ \he{\bvQ{x}}[k] \bvf{}'[l,k] = \bvi
+\end{equation}
+whose formulation is the same as the LCMV beamformer, and therefore its solution is
+\begin{equation}
+	\bvf{}'^\star[l,k] = \inv{\Corr{\bvv{}'}}[l,k] \bvQ{x}[k] \inv{\pts{ \he{\bvQ{x}}[k] \inv{\Corr{\bvv{}'}}[l,k] \bvQ{x}[k] }} \bvi
+\end{equation}
+
+Since all matrices involved in the calculation of the beamformer are real-valued, then
+\begin{equation}
+	\bvf{}'^\star[l,k] = \inv{\Corr{\bvv{}'}}[l,k] \bvQ{x}[k] \inv{\pts{ \tr{\bvQ{x}}[k] \inv{\Corr{\bvv{}'}}[l,k] \bvQ{x}[k] }} \bvi
+\end{equation}

@@ -1,0 +1,147 @@
+%% Requires:
+% xparse
+
+%% Sensor array symbols
+\MakeSymbol{\x}{\symsfup{x}}
+\MakeSymbol{\y}{\symsfup{y}}
+\MakeSymbol{\w}{\omega}
+\MakeSymbol{\an}{\symup{an}}
+\MakeSymbol{\t}{\theta}
+\MakeSymbol{\td}{\theta_{\mrm{d}}}
+\MakeSymbol{\tB}{\theta_{\mrm{B}}}
+\MakeSymbol{\Nu}{\mathcal{V}}
+\MakeSymbol{\rn}{\symup{rn}}
+\MakeSymbol{\+}{{}^{+}}
+\MakeSymbol{\-}{{}^{-}}
+\makeatletter
+% BEGIN_FOLD
+\NewDocumentCommand{\@OneIdx}{m m O{;} m}{% Name | Optional | Name
+    #1_{\IfValueT{#2}{#2#3} {#4}}
+}
+\NewDocumentCommand{\@TwoIdx}{s m m m m}{
+    #2_{\IfValueT{#3}{#3;}(#4\IfValueT{#3}{_{#3}}\IfBooleanT{#1}{'},#5\IfValueT{#3}{_{#3}}\IfBooleanT{#1}{'})}
+}
+\NewDocumentCommand{\@FourIdx}{m m m m m m}{
+    #1_{\IfValueT{#2}{#2;}(#3\IfValueT{#2}{_{#2}},#4\IfValueT{#2}{_{#2}});(#5\IfValueT{#2}{_{#2}},#6\IfValueT{#2}{_{#2}})}
+}
+
+\NewDocumentCommand{\dx}{g}{
+    \@OneIdx{\delta}{#1}{\x}
+}
+\NewDocumentCommand{\dy}{g}{
+    \@OneIdx{\delta}{#1}{\y}
+}
+\NewDocumentCommand{\Mx}{g}{
+    \@OneIdx{M}{#1}[,]{\x}
+}
+\NewDocumentCommand{\My}{g}{
+    \@OneIdx{M}{#1}[,]{\y}
+}
+
+\DeclareDocumentCommand{\P}{g O{m}}{
+    \@OneIdx{P}{#1}{#2}
+}
+\DeclareDocumentCommand{\S}{g O{m}}{
+    \@OneIdx{S}{#1}{#2}
+}
+\DeclareDocumentCommand{\R}{g O{m}}{
+    \@OneIdx{r}{#1}{#2}
+} 
+\DeclareDocumentCommand{\p}{g O{m}}{
+    \@OneIdx{\psi}{#1}{#2}
+}
+\DeclareDocumentCommand{\D}{g O{m}}{
+    \@OneIdx{D}{#1}{#2}
+}
+\DeclareDocumentCommand{\T}{g O{m}}{
+    \@OneIdx{T}{#1}{#2}
+}
+\LetLtxMacro{\d}{\udot}
+\DeclareDocumentCommand{\d}{g O{m}}{
+    \@OneIdx{d}{#1}{#2}
+}
+% END_FOLD
+\makeatother
+
+%% Bold symbols
+% BEGIN_FOLD
+\makeatletter
+\DeclareDocumentCommand{\bv}{m O{n} g}{
+	\@my{#2}{\symbfup{#1}}\IfValueT{#3}{_{#3}}
+}
+\DeclareDocumentCommand{\BV}{m g}{
+    \symbfsfup{#1}\IfValueT{#2}{_{#2}}
+}
+\DeclareDocumentCommand{\newbv}{s o m}{
+    \IfBooleanTF{#1}{
+        \IfValueTF{#2}{
+            \@namedef{bv#2}{\BV{#3}}
+        }{
+            \@namedef{bv#3}{\BV{#3}}
+        }
+    }{
+        \IfValueTF{#2}{
+            \@namedef{bv#2}{\bv{#3}}
+        }{
+            \@namedef{bv#3}{\bv{#3}}
+        }
+    }
+}
+\@namedef{:}{\scalebox{1.01}{\textbf{:}}}
+\makeatother
+% END_FOLD
+
+\newbv{h}
+\newbv{b}
+\newbv{c}
+\newbv{x}
+\newbv{g}
+\newbv{v}
+\newbv[Ga]{\Gamma}
+\newbv{I}
+\let\id\bvI
+\newbv{i}
+\newbv{u}
+\newbv*{H}
+\newbv*{B}
+\newbv*{G}
+\newbv*{y}
+\newbv*{r}
+\newbv*{z}
+\newbv*{f}
+\newbv*{d}
+\newbv*{w}
+\newbv*{C}
+\newbv*{p}
+\newbv*{q}
+\newbv*{F}
+\newbv*{P}
+\newbv*{A}
+\newbv*{D}
+\newbv*{Q}
+
+
+\let\Id\bvI
+
+
+% \def\bvL{*************}
+%% Mathematical symbols
+\NewDocumentCommand{\var}{m}{%
+    \phi_{#1}%
+}
+\NewDocumentCommand{\Corr}{m}{%
+    \bv{\Phi}_{#1}%
+}
+\NewDocumentCommand{\wng}{}{%
+    \mathcal{W}%
+}
+\NewDocumentCommand{\ag}{}{%
+    \mathcal{G}%
+}
+\NewDocumentCommand{\df}{}{%
+    \mathcal{D}%
+}
+
+\NewDocumentCommand{\mvdr}{}{%
+	\symup{MVDR}
+}

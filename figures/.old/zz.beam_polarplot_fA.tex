@@ -1,0 +1,16 @@
+\begin{figure}[H]
+    \begin{tikzpicture}
+        \begin{polar}
+            %% Beampattern plot
+			\addplot [no markers, thick, LightBlue] table [col sep=comma, y=val] {figures/results/data_pp_beam0_fA.csv};
+			
+			%% Important directions		
+			\drawdirs
+			
+			%% Array orientation
+			\drawarraydirs
+        \end{polar}
+    \end{tikzpicture}
+    \caption{Beampattern's magnitude for $f \approx 6.5\kilo\Hz$.}
+    \label{fig:beam_polarplot_fA}
+\end{figure}

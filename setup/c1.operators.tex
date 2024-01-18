@@ -1,0 +1,62 @@
+%% Requires:
+% xparse
+
+\let\mrm\symup
+\def\mtimes{\mathbin{\scalebox{0.7}{$\times$}}}
+\NewDocumentCommand{\sz}{s m m}{%
+	\IfBooleanTF{#1}{%
+		\bts{{#2} \mtimes {#3}}%
+	}{%
+		{#2} \mtimes {#3}%
+	}%
+}
+
+\NewDocumentCommand{\el}{m g O{m} o}{%
+	\bts{#1}_{%
+		\IfValueTF{#4}{%
+			(#3\IfValueT{#2}{_{#2}},#4\IfValueT{#2}{_{#2}})%
+		}{%
+			#3\IfValueT{#2}{_{#2}}%
+		}        
+	}
+}
+
+\NewDocumentCommand{\FT}{m O{(\w)}}{%
+	\symcal{F}\cts{#1}#2%
+}
+\NewDocumentCommand{\IFT}{m O{(t)}}{%
+	\symcal{F}^{-1}\cts{#1}#2%
+}
+\DeclareDocumentCommand{\F}{}{%
+	\symcal{F}
+}
+%
+\NewDocumentCommand{\RFT}{m O{(\w)}}{%
+	\symcal{S}\cts{#1}#2%
+}
+\NewDocumentCommand{\IRFT}{m O{(t)}}{%
+	\symcal{S}^{-1}\cts{#1}#2%
+}
+\DeclareDocumentCommand{\S}{}{%
+	\symcal{S}
+}
+
+\NewDocumentCommand{\STFT}{m O{[l,k]}}{%
+	\symbb{F}\cts{#1}#2%
+}
+\NewDocumentCommand{\ISTFT}{m O{[n]}}{%
+	\symbb{F}^{-1}\cts{#1}#2%
+}
+\DeclareDocumentCommand{\sF}{}{%
+	\symbb{F}
+}
+%
+\NewDocumentCommand{\SSBT}{m O{[l,k]}}{%
+	\symbb{S}\cts{#1}#2%
+}
+\NewDocumentCommand{\ISSBT}{m O{[n]}}{%
+	\symbb{S}^{-1}\cts{#1}#2%
+}
+\DeclareDocumentCommand{\sS}{}{%
+	\symbb{S}
+}

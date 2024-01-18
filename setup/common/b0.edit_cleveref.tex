@@ -1,0 +1,27 @@
+%\Crefname{figure}{Fig.}{Figs.}
+%\crefname{section}{sec.}{secs.}
+\makeatletter
+%\LetLtxMacro{\@cref}{\cref}
+\ABD{
+	\DeclareDocumentCommand{\mref}{m g}{%
+		\IfValueT{#2}{\cite{#2}-}\cref{#1}
+	}%
+}%
+\ABD{
+	\DeclareDocumentCommand{\eref}{m m}{%
+		\cite[][\cref{#2}]{#1}%
+	}%
+}%
+\makeatother
+
+\DeclareDocumentCommand{\addlblresource}{m}{
+	\input{#1}
+}
+
+\DeclareDocumentCommand{\extlabel}{m m O{0}m}{%
+	% Label | Type | Chap. number | Number
+	\newlabel{#1}{{20}{1}{}{#2.#3.#4}{}}
+	\newlabel{#1@cref}{{[#2][#4][]#4}{[1][1][]1}}
+}
+
+\titleformat{\subsubsection}{\normalfont}{\textit{\Alph{subsection}}.\arabic{subsubsection}.}{1em}{\itshape}

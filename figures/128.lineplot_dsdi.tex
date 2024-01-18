@@ -1,0 +1,27 @@
+%% Requires:
+% pgfplots.sty
+% edit_pgfplots.tex
+
+\pgfplotsset{compat=1.18}
+%\begin{subfigure}{\linewidth}
+%\centering
+\tikzsetnextfilename{dsdi_lineplot_128}
+\begin{tikzpicture}
+	\begin{lineplot}{DSDI}[ymin=-0.1, ymax=3]
+		\addplot [style=resA]
+		table [col sep=comma, y=val] {figures/io_input/STFT/dsdi_k_STFT_128.csv};
+		
+		\addplot [style=resC]
+		table [col sep=comma, y=val] {figures/io_input/SSBT/dsdi_k_SSBT_128.csv};
+		
+		\addplot [style=resE]
+		table [col sep=comma, y=val] {figures/io_input/SSBT-TRUE/dsdi_k_SSBT-TRUE_128.csv};
+		
+		\addlegendentry{STFT};
+		\addlegendentry{N-SSBT};
+		\addlegendentry{T-SSBT};
+	\end{lineplot}
+\end{tikzpicture}
+%	\caption{}
+%	\label{subfig:1_gain_lineplot}
+%\end{subfigure}

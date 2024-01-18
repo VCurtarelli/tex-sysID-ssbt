@@ -1,0 +1,48 @@
+%\pgfplotsset{
+%    table/myStyleWithMeta/.style={    
+%        meta=Label, 
+%    }
+%}
+
+{\footnotesize%
+	\begin{subfigure}{0.48\linewidth}% resA
+		%\centering
+		\tikzsetnextfilename{heatmap_STFT_128}%
+		\begin{tikzpicture}%
+			\begin{heatmap}{\meshcols}{Gain (dB)}[colorbar to name={heatmap_STFT_128}, xlabel={Time ($\si{\second}$)}, ylabel={Freq. ($\si{\kilo\hertz}$)}]%
+				\addplot3[surf, mesh/cols=\meshcols, mesh/rows=\meshrows, shader=interp] table[y=freq, x=win, z=val, col sep=comma] {figures/io_input/STFT/gain_SINR_lk_STFT_128.csv};%
+			\end{heatmap}%
+		\end{tikzpicture}%
+		\vspace*{-2mm}\caption{STFT}%
+		\label{subfig:heatmap_gain_STFT_128}%
+		\vspace*{2mm}%
+	\end{subfigure}%
+}\hspace{0.03\linewidth}
+{\footnotesize%
+	\begin{subfigure}{0.48\linewidth}% resA
+		%\centering
+		\tikzsetnextfilename{heatmap_SSBT_128}%
+		\begin{tikzpicture}%
+			\begin{heatmap}{\meshcols}{Gain (dB)}[colorbar to name={heatmap_SSBT_128}, xlabel={Time ($\si{\second}$)}, ylabel={Freq. ($\si{\kilo\hertz}$)}]%
+				\addplot3[surf, mesh/cols=\meshcols, mesh/rows=\meshrows, shader=interp] table[y=freq, x=win, z=val, col sep=comma] {figures/io_input/SSBT/gain_SINR_lk_SSBT_128.csv};%
+			\end{heatmap}%
+		\end{tikzpicture}%
+		\vspace*{-2mm}\caption{N-SSBT}%
+		\label{subfig:heatmap_gain_SSBT_128}%
+		\vspace*{2mm}%
+	\end{subfigure}%
+}\newline%
+{\footnotesize%
+	\begin{subfigure}{0.48\linewidth}% resA
+		%\centering
+		\tikzsetnextfilename{heatmap_SSBT-TRUE_128}%
+		\begin{tikzpicture}%
+			\begin{heatmap}{\meshcols}{Gain (dB)}[colorbar to name={heatmap_SSBT-TRUE_128}, xlabel={Time ($\si{\second}$)}, ylabel={Freq. ($\si{\kilo\hertz}$)}]%
+				\addplot3[surf, mesh/cols=\meshcols, mesh/rows=\meshrows, shader=interp] table[y=freq, x=win, z=val, col sep=comma] {figures/io_input/SSBT-TRUE/gain_SINR_lk_SSBT-TRUE_128.csv};%
+			\end{heatmap}%
+		\end{tikzpicture}%
+		\vspace*{-2mm}\caption{T-SSBT}%
+		\label{subfig:heatmap_gain_SSBT-TRUE_128}%
+		\vspace*{2mm}%
+	\end{subfigure}%
+}%

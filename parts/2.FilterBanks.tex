@@ -1,0 +1,35 @@
+\section{Vectorized filter banks with the CTF model}
+\label{sec:filter_banks_ctf_model}
+
+%\textit{\textbf{Note:} From now on, "normal" letters are used for scalars, bold for sample-stacked variables, and sans-serif for sensor-stacked variables.}
+Given the LTI system with impulse response $h[n]$, we let $H[l,k]$ be its time-frequency-domain representation, with $0 \leq l \leq L_H-1$ being its window index, and $0 \leq k \leq K_H-1$ its frequency bin index. We also let $x[n]$ be the input for the said system, with $X[l, k]$ its time-frequency representation, an array of size $\sz{L_X}{K_X}$. We assume that $K_H = K_X = K$, where both signals have the same number of frequency bins, however we don't necessarily have $L_H = L_X$. Also, we assume that $L_H < L_X$, for simplicity.
+
+With the convolution transfer function (CTF) model (assuming only band-to-band filtering), then
+\begin{equation}
+    Y[l,k] = X[l,k] \ast H[l,k]
+\end{equation}
+where the convolution is in the window-index axis. Since the system is time-invariant, then $H[l,k]$ is a time-invariant response.
+
+In the degenerate case where $L_H = 1$, the equation above simplifies to the well-known (simpler) multiplication model, $Y[l,k] = X[l,k] H[k]$. This is only adequate for situations where the system's impulse response is shorter than the analysis window length, not being valid in other situations, such as with reverberation.
+
+Using the definition of the convolution,
+\begin{equation}
+    Y[l,k] = \sum_{\lambda=-\infty}^{\infty} X[l-\lambda,k] H[\lambda,k]
+\end{equation}
+and, since (in this framework) $H[\lambda,k] $ only exists if $0 \leq \lambda \leq L_H-1$, then
+\begin{equation}
+    Y[l,k] = \sum_{\lambda = 0}^{L_H-1} X[l-\lambda,k] h[\lambda,k]
+\end{equation}
+
+We define $\bvx{}[l,k]$ as the most-recent $L_H$ samples for the $k$-th bin, starting with the latest sample,
+\begin{equation}
+    \bvx{}[l,k] = \tr{\tup{ {X[l,k]} , {X[l-1,k]} , \cdots , {X[l-L_H+1,k]} }}
+\end{equation}
+and we define $\bvh{}[k]$ as
+\begin{equation}
+    \bvh{}[k] = \tr{\tup{ {H[0,k]} , {H[1,k]} , \cdots ,  {H[L_H-1,k]} }}
+\end{equation}
+Note that $\bvh{}[k]$ doesn't depend on the window-index $l$, since the system is time-invariant. With this, it is easy to see that
+\begin{equation}
+    Y[l,k] = \tr{\bvh{}}[k] \bvx{}[l,k]
+\end{equation}

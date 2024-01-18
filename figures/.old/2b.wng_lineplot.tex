@@ -1,0 +1,21 @@
+%% Requires:
+% pgfplots.sty
+% edit_pgfplots.tex
+
+\pgfplotsset{compat=1.18}
+\begin{subfigure}{\linewidth}
+\centering
+\tikzsetnextfilename{wng_lineplot}
+	\begin{tikzpicture}
+		\begin{lineplot}{WNG gain (dB)}[ymax=0]
+		
+			\addplot [style=resA]
+			table [col sep=comma, y=val] {figures/results/CTF_STFT/wng_CTF_STFT.csv};
+			
+			\addplot [style=resC]
+			table [col sep=comma, y=val] {figures/results/CTF_SSBT/wng_CTF_SSBT.csv};
+		\end{lineplot}
+	\end{tikzpicture}
+	\caption{}
+	\label{subfig:2_wng_lineplot}
+\end{subfigure}

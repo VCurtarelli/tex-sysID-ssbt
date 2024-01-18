@@ -1,0 +1,18 @@
+\DeclareDocumentCommand{\review}{m g}{
+    \item \IfValueTF{#2}{
+         {\color{LightGray}\soutit{#1}} - #2
+    }{
+        {\color{Gray}\textit{#1}}
+    }
+}
+
+\newcounter{reviewer}
+\setcounter{reviewer}{0}
+\def\newreviewer{\stepcounter{reviewer}\setcounter{enumi}{0}}
+
+\DeclareDocumentEnvironment{reviews}{}{
+    \begin{enumerate}[label=\thereviewer.{\alph*}]
+    \footnotesize
+}{
+    \end{enumerate}
+}

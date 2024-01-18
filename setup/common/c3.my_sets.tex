@@ -1,0 +1,111 @@
+\NewDocumentCommand{\SubSize}{m m}{\IfValueT{#1}{_{\scalebox{0.7}{$ \sz{#1\!}{\!\IfValueTF{#2}{#2}{#1}} $}}}}
+
+\newlength{\SMtblimit}
+\setlength{\SMtblimit}{2pt}
+\NewDocumentEnvironment{smatrix}{O{\SMtblimit}}{
+	\if@display
+		\setlength{\arraycolsep}{3pt}%
+		\setlength{\cellspacetoplimit}{#1}%
+		\setlength{\cellspacebottomlimit}{#1}%
+	\fi
+	~\begin{matrix} }{
+	\end{matrix}~
+}
+\NewDocumentEnvironment{sbmatrix}{O{\SMtblimit}}{
+	\setlength{\arraycolsep}{3pt}%
+	\setlength{\cellspacetoplimit}{#1}%
+	\setlength{\cellspacebottomlimit}{#1}%
+	\left[~\begin{matrix} }{
+	\end{matrix}~\right]
+}
+\NewDocumentEnvironment{scmatrix}{O{\SMtblimit}}{
+	\setlength{\arraycolsep}{3pt}%
+	\setlength{\cellspacetoplimit}{#1}%
+	\setlength{\cellspacebottomlimit}{#1}%
+	\left\{~\begin{matrix} }{
+	\end{matrix}~\right\}
+}
+\NewDocumentCommand{\otup}{O{}m o m o o}{%
+	{%
+		\begin{sbmatrix}%
+			#2#1 & \cdots#1 & \IfValueT{#3}{#3#1 & \cdots#1 & } #4
+		\end{sbmatrix}\,%
+	}\SubSize{#5}{#6}%
+}%
+\NewDocumentCommand{\ovtup}{m o m o o}{
+	{%
+		\begin{sbmatrix}%
+			#1 \\
+			\vdots \\
+			\IfValueT{#2}{%
+				#2 \\
+				\vdots \\
+			}%
+			#3
+		\end{sbmatrix}\,%
+	}\SubSize{#4}{#5}%
+}%
+\NewDocumentCommand{\pair}{m m o o}{%
+	{%
+		\begin{sbmatrix}%
+			#1 & #2
+		\end{sbmatrix}\,%
+	}\SubSize{#3}{#4}%
+}%
+%
+\NewDocumentCommand{\vpair}{m m o o}{%
+	{%
+		\begin{sbmatrix}%
+			#1 \\[0.5em]
+			#2
+		\end{sbmatrix}\,%
+	}\SubSize{#3}{#4}%
+}%
+\def\setsep{}
+\newcommand{\setprocessor}[1]{
+	\setsep\IfEmpty{#1}{\cdots}{#1}
+	\global\def\setsep{\,,&}
+}
+\newcommand{\vsetprocessor}[1]{
+	\setsep\IfEmpty{#1}{\vdots}{#1}
+	\global\def\setsep{\\}
+}
+\NewDocumentCommand{\set}{ >{\SplitList{,}}m }{
+    \global\def\setsep{}
+	\begin{scmatrix}%
+		\ProcessList{#1}{\setprocessor}
+	\end{scmatrix}%
+	\global\def\setsep{}
+}
+\NewDocumentCommand{\tup}{ >{\SplitList{,}}m o o }{
+    \global\def\setsep{}
+	\begin{sbmatrix}%
+		\ProcessList{#1}{\setprocessor}
+	\end{sbmatrix}\SubSize{#2}{#3}%%
+	\global\def\setsep{}
+}
+\NewDocumentCommand{\vtup}{ >{\SplitList{,}}m o o }{
+    \global\def\setsep{}
+	\begin{sbmatrix}%
+		\ProcessList{#1}{\vsetprocessor}
+	\end{sbmatrix}\SubSize{#2}{#3}%%
+	\global\def\setsep{}
+}
+%
+\newcommand{\rangeprocessor}[2]{
+	\pyif{r"\infty" in r"\string#1"}{
+		\def\dell{(}
+	}{
+		\def\dell{[}
+	}
+	\pyif{r"\string\infty" in r"\string#2"}{
+		\def\delr{)}
+	}{
+		\def\delr{]}
+	}
+%	\left\dell #1,#2 \right\delr
+	\udel[\dell]{#1,#2}[\delr]
+}
+\NewDocumentCommand{\range}{ >{\SplitArgument{1}{,}}m }{
+	\rangeprocessor#1
+}

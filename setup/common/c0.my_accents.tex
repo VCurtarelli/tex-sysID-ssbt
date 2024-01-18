@@ -1,0 +1,46 @@
+%% Requires:
+% xparse
+
+
+\makeatletter
+\NewDocumentCommand{\@my}{m m}{
+    \@nameuse{@my#1}{#2}
+}
+% \NewDocumentCommand{\@myh}{m}{
+%     \oset{\raisebox{1pt}[3pt][3pt]{\scalebox{1.0}[0.5]{$\wedge$}}}{#1}
+% }
+% \NewDocumentCommand{\@myt}{m}{
+%     \oset{\scalebox{0.9}[0.9]{$\sim$}}{#1}
+% }
+% \NewDocumentCommand{\@mym}{m}{
+%     \oset{\scalebox{1.0}[1.0]{$\minus$}}{#1}
+% }
+% \newlength{\@barwidth}
+% \newlength{\@barheight}
+% \NewDocumentCommand{\@myb}{s m}{
+%     \IfBooleanTF{#1}{
+%     	\oset{\scalebox{1.0}[1.0]{$\minus$}}{#1}
+%     }{
+%     	\setlength{\@barwidth}{\widthof{$#2$}}
+%     	\setlength{\@barheight}{\heightof{$\minus$}}
+%         \oset{\resizebox{\@barwidth}{\@barheight}{$\minus$}}{#2}
+%    	}
+% }
+\NewDocumentCommand{\@myh}{m}{%
+    \hat{#1}
+}
+\NewDocumentCommand{\@myt}{m}{%
+    \tilde{#1}
+}
+\NewDocumentCommand{\@myb}{m}{%
+    \bar{#1}
+}
+\NewDocumentCommand{\@myd}{m}{
+    \dot{#1}
+}
+\NewDocumentCommand{\@myn}{m}{#1}
+% \let\hat\@myh
+% \let\tilde\@myt
+% \let\bar\@myb
+% \let\est\hat
+\makeatother
