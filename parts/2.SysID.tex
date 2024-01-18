@@ -1,0 +1,25 @@
+\section{System Identification}
+
+Let us assume that for a bin $k$, we only have to consider the bins up to $k' = (k \pm K) \mod N$, exploiting the periodicity of $k$. With this,
+\begin{subgather}
+	\bvh'[k] = \tr{ \tup{ {\tr{\bvh[d]}[k,(k-K)\mod N]} , {\tr{\bvh[d]}[k,(k-K+1)\mod N]} ,, {\tr{\bvh[d]}[k,(k+K)\mod N]} } } \\
+	\bvx'[l] = \tr{ \tup{ {\tr{\bvx[d]}[l,(k-K)\mod N]} , {\tr{\bvx[d]}[l,(k-K+1)\mod N]} ,, {\tr{\bvx[d]}[l,(k+K)\mod N]} } } \\
+	\bvX' = \tr{ \tup{ \tr{\bvx'}[0] , \tr{\bvx'}[1] ,, \tr{\bvx'}[L_y-1] } }
+\end{subgather}
+and then
+\begin{equations}
+	\bvd'[k] 
+	& \approx \bvd[k] \\
+	& = \bvX' \bvh'[k]
+\end{equations}
+
+In order to find the estimate $\bvh'[k]$, we use the LS minimization,
+\begin{equation}
+	\bvh[h]'[k] = \min_{\bvh'[k]} \norm{\,\bvy[k] - \bvX' \bvh'[k]\,}^2
+\end{equation}
+whose solution is
+\begin{equation}
+	\bvh[h]'[k] = \inv{ \pts{\he{\bvX'}\bvX'} } \he{\bvX'} \bvy[k]
+\end{equation}
+
+$\bvh'[k]$ and $\bvx'[l]$ are $\sz{(2K+1)L_h}{1}$ vectors. $\bvX'$ is a $\sz{L_y}{(2K+1)L_h}$ matrix. $\bvd'[k]$ is a $\sz{L_y}{1}$ vector.
