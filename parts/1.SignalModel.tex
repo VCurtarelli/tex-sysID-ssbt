@@ -2,18 +2,21 @@
 Let there be a system defined as
 \begin{equations}
 	y[n]
-	& = x[n] \ast h[n] + \xi[n] \\
-	& = d[n] + \xi[n]
+	& = x[n] \ast h[n] + v[n] \\
+	& = d[n] + v[n]
 \end{equations}
 
 Passing through a short-time transform (STFT or SSBT), it is given in the time-frequency domain as
 \begin{equations}
 	\dy[l,k]
-	& = \dd[l,k] + \dxi[l,k] \\
-	& = \sum_{k'=0}^{N-1} \sum_{l'=0}^{L_h-1} \dx[l-l',k'] \dh[l',\{k,k'\}] + \dxi[l,k]
+	& = \dd[l,k] + \dv[l,k] \\
+	& = \sum_{k'=0}^{N-1} \sum_{l'=0}^{L_h-1} \dx[l-l',k'] \dh[l',\{k,k'\}] + \dv[l,k]
 \end{equations}
 in which:\\
-$\dy[l,k]$ is the transform of $y[n]$, at window-index (or downsampled time) $l$ and bin $k$ (and the same for $\dd[l,k]$, $\dx[l-l',k]$ and $\dxi[l,k]$), and $\dh[l', \{k,k'\}]$ is the frequency response at time $l'$ between bin $k$ and bin $k'$. $N$ is the number of frequency bins, and $L_h$ is the length of $\dh[l',\{k,k'\}]$ in the sample axis.
+$\dy[l,k]$ is the transform of $y[n]$, at window-index (or downsampled time) $l$ and bin $k$ (and the same for $\dd[l,k]$, $\dx[l-l',k]$ and $\dv[l,k]$)\\
+$\dh[l', \{k,k'\}]$ is the frequency response at time $l'$ between bin $k$ and bin $k'$\\
+$N$ is the number of frequency bins\\
+$L_h$ is the length of $\dh[l',\{k,k'\}]$ in the sample axis.
 
 The second summation (over $l'$) can be seen as a time-convolution between $\dx[l,k]$ and $\dh[l,\{k,k'\}]$, and the first summation (over $k'$) as either a frequency-convolution, or as an interference of the $k'$-th bin of $\dx[l,k]$ and the $k$-th bin of $\dy[l,k]$. We call $\dh[l, \{k,k\}]$ as the band-to-band response (or band-to-band filter), and $\dh[l,\{k,k'\}]$ for $k \neq k'$ as the crossband response.
 
@@ -34,21 +37,21 @@ By writing
 \end{subgather}
 then
 \begin{equation}
-	\dy[l,k] = \tr{\bvx{}[l]} \bvh{}[k] + \dxi{}[l,k]
+	\dy[l,k] = \tr{\bvx{}[l]} \bvh{}[k] + \dv{}[l,k]
 \end{equation}
 
 If we write
 \begin{equation}
-	\bvX = \tr{ \tup{ \tr{\bvx}[0] , \tr{\bvx}[1] ,, \tr{\bvx}[L_y-1] } }
+	\bvX = \tr{ \tup{ {\bvx}[0] , {\bvx}[1] ,, {\bvx}[L_y-1] } }
 \end{equation}
 then
 \begin{equation}
-	\bvy[k] = \bvX \bvh{}[k] + \bvxi[k]
+	\bvy[k] = \bvX \bvh{}[k] + \bvv[k]
 \end{equation}
 where
 \begin{equation}
 	\bvy[k] = \tr{ \tup{ {\dy[0,k]} , {\dy[1,k]} ,, {\dy[L_y-1,k]} } }
 \end{equation}
-with $L_y$ being the length of the output signal. For such, we assume that $\bvx[d][l,k] = 0$ for $l < 0$.
+with $L_y = L_h + L_x - 1$ being the output signal's length. For such, we assume that $\bvx[d][l,k] = 0$ for $l < 0$.
 
-We have that $\bvx[d][l,k]$ is a $\sz{L_h}{1}$ vector, $\bvx{}[l]$ is a $\sz{NL_h}{1}$ vector, and $\bvX[l,k]$ is a $\sz{L_y}{NL_h}$ matrix. $\bvh{}[k]$ is a $\sz{NL_h}{1}$ vector. $\bvy[k]$ and $\bvxi[k]$ are $\sz{L_y}{1}$ vectors.
+We have that $\bvx[d][l,k]$ is a $\sz{L_h}{1}$ vector, $\bvx{}[l]$ is a $\sz{NL_h}{1}$ vector, and $\bvX$ is a $\sz{L_y}{NL_h}$ matrix. $\bvh{}[k]$ is a $\sz{NL_h}{1}$ vector. $\bvy[k]$ and $\bvv[k]$ are $\sz{L_y}{1}$ vectors.

@@ -1,0 +1,51 @@
+\section{Development of $\dh[l,\{k,k'\}]$}
+\label{appA:development_hlkk'}
+
+From \cref{eq:sec3:pre_developments_appendix}, we clearly see that
+\begin{equations}
+	& \dh[\{l,l'\}, \{k,k'\}] \\
+	& \begin{split}
+		= \sum_{m} \sum_{\eta=0}^{T_h-1} ~ & h[\eta] \pts{\psi[(m-\eta)-l'\cdot L] \cos\pts{2\pi \frac{k'}{K}((m-\eta) -l' \cdot L) - \frac{\pi}{4}}} \\
+		\times ~ & \pts{\tilde{\psi}[m-l\cdot L] \cos\pts{2\pi \frac{k}{K}(m-l \cdot L) - \frac{\pi}{4}}}
+	\end{split} \\
+	& \begin{split}
+		= \sum_{\bar{m}} \sum_{\eta=0}^{T_h-1} ~ & h[\eta] \psi[\bar{m} - \eta + (l-l')L]\tilde{\psi}[\bar{m}] \\
+		\times~ & \Bigg[\cos\pts{2\pi\frac{k'+k}{K}\bar{m} + 2\pi\frac{k'}{K} ((l-l')L - \eta) - \frac{\pi}{2}} \\
+		+ ~ & \cos\pts{2\pi \frac{k'-k}{K}\bar{m} + 2\pi\frac{k'}{K}((l-l')L - \eta) } \Bigg]\cdot\frac{1}{2}
+	\end{split} \\
+	& \begin{split}
+		= \sum_{\bar{m}} \sum_{\eta=0}^{T_h-1} ~ & h[\eta] \psi[\bar{m} - \eta + (l-l')L]\tilde{\psi}[\bar{m}] \\
+		\times~ & \Bigg[\sin\pts{2\pi\frac{k'+k}{K}\bar{m} + 2\pi\frac{k'}{K} ((l-l')L - \eta)} \\
+		+ ~ & \cos\pts{2\pi \frac{k'-k}{K}\bar{m} + 2\pi\frac{k'}{K}((l-l')L - \eta) } \Bigg]\cdot\frac{1}{2}
+	\end{split}
+\end{equations}
+and, since there're only terms $(l-l')$, then $\dh[\{l,l'\}, \{k,k'\}] \equiv \dh[l-l', \{k,k'\}]$. By letting $l-l'\rightarrow l$ and $\bar{\eta} = -\eta+pL$,
+\begin{equations}
+	& \dh[l, \{k,k'\}] \\
+	& \begin{split}
+		= \sum_{\bar{\eta}=pL}^{pL-T_h+1} h[\bar{\eta}] \sum_{\bar{m}} ~& \psi[\bar{m} +\bar{\eta}]\tilde{\psi}[\bar{m}] \cdot\frac{1}{2} \\
+		\times~ & \Bigg[\sin\pts{2\pi\frac{k'+k}{K}\bar{m} + 2\pi\frac{k'}{K}\bar{\eta}} + \cos\pts{2\pi \frac{k'-k}{K}\bar{m} + 2\pi\frac{k'}{K}\bar{\eta} } \Bigg]
+	\end{split} \\
+	& \begin{split}
+		= \sum_{\bar{\eta}=pL}^{pL-T_h+1} h[\bar{\eta}] \sum_{\bar{m}} ~& \psi[\bar{m} +\bar{\eta}]\tilde{\psi}[\bar{m}] \cdot\frac{1}{2} \\
+		\times~ & \Bigg[\sin\pts{2\pi\frac{k'}{K}\pts{\bar{m}+\bar{\eta}} + 2\pi\frac{k}{K}\bar{m}} + \cos\pts{2\pi\frac{k'}{K}\pts{\bar{m}+\bar{\eta}} - 2\pi\frac{k}{K}\bar{m}} \Bigg]
+	\end{split} \\
+\end{equations}
+
+By defining $a_{k}[n] = 2\pi\frac{k}{K}n$, then
+\begin{equations}
+	\dh[l, \{k,k'\}] = \sum_{\bar{\eta} = pL}^{pL-T_h+1} h[\bar{\eta}] \sum_{\bar{m}} & \psi[\bar{m} +\bar{\eta}]\tilde{\psi}[\bar{m}] \cdot\frac{1}{2} \\
+	\times ~& \bts{\sin{a_{k'}[\bar{m}+\bar{\eta}]} + \cos{a_{k'}[\bar{m}+\bar{\eta}]}}\bts{\sin{a_{k}[\bar{m}]} + \cos{a_{k}[\bar{m}]}}
+\end{equations}
+then we finally get
+%\begin{equation}
+%	\psi_{k,k'}[\eta] \defas \sum_{m} \psi[m +\eta]\tilde{\psi}[m] \cdot\frac{1}{2} \bts{\sin{a_{k'}[m+\eta]} + \cos{a_{k'}[m+\eta]}}\bts{\sin{a_{k}[m]} + \cos{a_{k}[m]}}
+%\end{equation}
+\begin{equation}
+	\phi_{k,k'}[\eta] \defas \sum_{m} \xi_{k'}[m+n] \tilde{\xi}_{k}[m]
+\end{equation}
+where
+\begin{subgather}
+	\xi_{k'}[n] = \psi[n] \frac{1}{\Sqrt{2}} \bts{\sin a_{k'}[n] + \cos a_{k'}[n]} \\
+	\tilde{\xi}_{k}[n] = \tilde{\psi}[n] \frac{1}{\Sqrt{2}} \bts{\sin a_{k}[n] + \cos a_{k}[n]}
+\end{subgather}

@@ -1,0 +1,57 @@
+\section{System ID with SSB Transform}
+
+We define the Single-Sideband Transform (SSBT) as
+\begin{equations}
+	\dx[l,k]
+	& = \real{\sum_{m} x[m] \tilde{\psi}[m-l\cdot L] e^{-\j 2\pi \frac{k}{K}(m-l\cdot L)} e^{\j\frac{\pi}{4}}} \\
+	& = \sum_{m} x[m] \tilde{\psi}[m-l\cdot L] \real{e^{-\j 2\pi \frac{k}{K}(m-l\cdot L)} e^{\j\frac{\pi}{4}}} \\
+	& = \sum_{m} x[m] \tilde{\psi}[m-l\cdot L] \cos\pts{2\pi \frac{k}{K}(m-l\cdot L) - \frac{\pi}{4}}
+\end{equations}
+
+By defining our analysis window
+\begin{equation}
+	\tilde{\zeta}_{l,k}[n] \defas \tilde{\psi}[n-l\cdot L] \cos\pts{2\pi \frac{k}{K}(n-l \cdot L) - \frac{\pi}{4}}
+\end{equation}
+then
+\begin{equation}
+	\dx[l,k] = \sum_{m} x[m] \tilde{\zeta}_{l,k}[m]
+\end{equation}
+in which $\tilde{\psi}[n]$ is the analysis window.
+
+The Inverse Single-Sideband Transform can be defined
+\begin{equation}
+	x[n] = \real{\sum_{l}\sum_{k=0}^{K-1}\dx[l,k] \psi_{l,k}[n] e^{\j2\pi\frac{k}{K}(m-l\cdot L)} e^{-\j\frac{\pi}{4}}}
+\end{equation}
+through which we achieve the synthesis window
+\begin{equation}
+	\zeta_{l,k}[n] \defas \psi[n-l\cdot L] \cos\pts{2\pi \frac{k}{K}(n-l\cdot L) - \frac{\pi}{4}}
+\end{equation}
+and
+\begin{equation}
+	\label{eq:sec3:xn_from _dxlk_SSBT}
+	x[n] = \sum_{l} \sum_{k=0}^{K-1} \dx[l,k] \zeta_{l,k}[n]
+\end{equation}
+
+Given a system with input $x[n]$, impulse response $h[n]$, and output $d[n] = x[n] \ast h[n]$, through the SSBT
+\begin{equations}{eq:sec3:pre_developments_appendix}
+	\dd[l,k]
+	& = \sum_{m} \pts{\sum_{\eta=0}^{T_h-1} h[\eta] x[m-\eta] } \tilde{\zeta}_{l,k}[m] \\
+	& = \sum_{m} \sum_{\eta=0}^{T_h-1} h[\eta] x[m-\eta]  \tilde{\zeta}_{l,k}[m]
+\end{equations}
+Using \cref{eq:sec3:xn_from _dxlk_SSBT},
+\begin{equations}
+	\dd[l,k]
+	& = \sum_{m} \sum_{\eta=0}^{T_h-1} h[\eta] \pts{ \sum_{l'} \sum_{k'=0}^{K-1} \dx[l',k'] \zeta_{l',k'}[m-\eta] } \tilde{\zeta}_{l,k}[m] \\
+	& = \sum_{k'=0}^{K-1} \sum_{l'} \dx[l',k'] \sum_{m} \sum_{\eta=0}^{T_h-1} h[\eta] \zeta_{l',k'}[m-\eta] \tilde{\zeta}_{l,k}[m] \\
+	& = \sum_{k'=0}^{K-1} \sum_{l'} \dx[l',k'] \dh[l', \{k,k'\}]
+\end{equations}
+with (using \cref{appA:development_hlkk'})
+\begin{equation}
+	\dh[l, \{k,k'\}] = \sum_{\eta} h[\eta] \sum_{\bar{m}} \phi_{k,k'}[\eta]
+\end{equation}
+where
+\begin{subgather}
+	\phi_{k,k'}[\eta] = \sum_{m} \xi_{k'}[m+n] \tilde{\xi}_{k}[m] \\
+	\xi_{k'}[n] = \psi[n] \frac{1}{\Sqrt{2}} \bts{\sin a_{k'}[n] + \cos a_{k'}[n]} \\
+	\tilde{\xi}_{k}[n] = \tilde{\psi}[n] \frac{1}{\Sqrt{2}} \bts{\sin a_{k}[n] + \cos a_{k}[n]}
+\end{subgather}
