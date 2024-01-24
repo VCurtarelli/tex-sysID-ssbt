@@ -1,0 +1,15 @@
+\input{figures/io_input/colors_6.tex}
+\section{Simulations}
+
+In \cref{fig:sec4:lineplot_erle} we have the echo-return loss enhancement (ERLE) of the estimated filter $\bvh[h]'[k]$ from \cref{eq:sec2:def_bvhh'_k}. We generated results for different numbers of crossband filters $K$, comparing them between the STFT and SSBT. Continuous lines are the results with the SSBT, and dashed lines with the STFT. Each color represents a different $K$.
+
+With the STFT, we see that although using $K=1$ is better than using $K=0$ for higher SNRs, we also see that increasing $K$ further doesn't lead to a better output, no matter the SNR. This is different than what was achieved with the SSBT, where increasing $K$ leads to a better performance for higher SNRs. This result for the STFT is also different than that obtained in Avargel's paper, where increasing $K$ led to a better performance for higher SNRs (fig. 9). This could be due to the RIR's used.
+
+We see that the SSBT has a better performance than the STFT for lower input SNRs for all $K \neq 1$, which outperformed all results obtained through the SSBT. For each $K$, the marker indicate the SNR value in which it is advantageous to use the STFT for higher SNRs, and the SSBT for lower ones.
+
+\begin{figure}[H]
+	\centering
+	\input{figures/lineplot_ERLE.tex}
+	\caption{ERLE lineplot.}
+	\label{fig:sec4:lineplot_erle}
+\end{figure}
