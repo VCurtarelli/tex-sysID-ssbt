@@ -3,7 +3,7 @@
 
 We will estimate the echo-return loss enhancement (ERLE) of the estimated filter $\bvh[h]'[k]$ from \cref{eq:sec2:def_bvhh'_k}, for distinct scenarios. We generated results for different numbers of crossband filters $K$, comparing them between the STFT and SSBT. Continuous lines are the results with the SSBT, and dashed lines with the STFT. Each color represents a different $K$.
 
-\noindent\textit{Case 1 -} In here: both $x[n]$ and $v[n]$ are white Gaussian noises; $L = \floor{\nicefrac{N}{2}}$; and we use a Hann window.
+\noindent\textit{Case 1 -} In here: both $x[n]$ and $v[n]$ are white Gaussian noises; $L = \floor{\nicefrac{N}{2}}$; we use a Hann window; and $N = 32$ samples per window.
 
 \begin{figure}[H]
 	\centering
@@ -52,22 +52,13 @@ We will estimate the echo-return loss enhancement (ERLE) of the estimated filter
 	\label{fig:sec4:lineplot_erle_case5}
 \end{figure}
 
-We see that in none of the proposed cases, the SSBT results outperformed the STFT ones. The only case in which they were matched was case 2, with $x[n]$ being a speech signal, but in that scenario the ERLE was of $-2.2\db$ or lower, therefore incorrectly modeling $d[n]$.
+\noindent\textit{Case 6 -} We now use a Hann window with $N = 64$ samples.
 
-%\noindent\textit{Case 6 -} Here we will use $L = \floor{\nicefrac{N}{4}}$ (from the successful case 4) with $v[n]$ as a male speech signal.
-%
-%\begin{figure}[H]
-%	\centering
-%	\input{figures/lineplot_ERLE_case6.tex}
-%	\caption{ERLE lineplot.}
-%	\label{fig:sec4:lineplot_erle_case6}
-%\end{figure}
-%
-%\noindent\textit{Case 7 -} Here we will use $L = \floor{\nicefrac{N}{4}}$ (from the successful case 4) with a Hamming window.
-%
-%\begin{figure}[H]
-%	\centering
-%	\input{figures/lineplot_ERLE_case7.tex}
-%	\caption{ERLE lineplot.}
-%	\label{fig:sec4:lineplot_erle_case7}
-%\end{figure}
+\begin{figure}[H]
+\centering
+\input{figures/lineplot_ERLE_case6.tex}
+\caption{ERLE lineplot.}
+\label{fig:sec4:lineplot_erle_case6}
+\end{figure}
+
+We see that in none of the proposed cases, the SSBT results outperformed the STFT ones. The only case in which they were matched was case 2, with $x[n]$ being a speech signal, but in that scenario the ERLE was of $-2.2\text{dB}$ or lower, therefore incorrectly modeling $d[n]$.
