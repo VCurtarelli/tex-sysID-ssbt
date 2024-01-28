@@ -8,8 +8,7 @@ We define the Single-Sideband Transform (SSBT) as
 	& = \sum_{m} x[m] \tilde{\psi}[m-l\cdot L] \real{e^{-\j 2\pi \frac{k}{K}(m-l\cdot L)} e^{\j\frac{\pi}{4}}} \\
 	& = \sum_{m} x[m] \tilde{\psi}[m-l\cdot L] \cos\pts{2\pi \frac{k}{K}(m-l\cdot L) - \frac{\pi}{4}}
 \end{equations}
-
-By defining our analysis window
+where $L$ is the time-step between windows. By defining our analysis window
 \begin{equation}
 	\tilde{\zeta}_{l,k}[n] \defas \tilde{\psi}[n-l\cdot L] \cos\pts{2\pi \frac{k}{K}(n-l \cdot L) - \frac{\pi}{4}}
 \end{equation}

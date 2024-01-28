@@ -1,15 +1,73 @@
 \input{figures/io_input/colors_6.tex}
 \section{Simulations}
 
-In \cref{fig:sec4:lineplot_erle} we have the echo-return loss enhancement (ERLE) of the estimated filter $\bvh[h]'[k]$ from \cref{eq:sec2:def_bvhh'_k}. We generated results for different numbers of crossband filters $K$, comparing them between the STFT and SSBT. Continuous lines are the results with the SSBT, and dashed lines with the STFT. Each color represents a different $K$.
+We will estimate the echo-return loss enhancement (ERLE) of the estimated filter $\bvh[h]'[k]$ from \cref{eq:sec2:def_bvhh'_k}, for distinct scenarios. We generated results for different numbers of crossband filters $K$, comparing them between the STFT and SSBT. Continuous lines are the results with the SSBT, and dashed lines with the STFT. Each color represents a different $K$.
 
-With the STFT, we see that although using $K=1$ is better than using $K=0$ for higher SNRs, we also see that increasing $K$ further doesn't lead to a better output, no matter the SNR. This is different than what was achieved with the SSBT, where increasing $K$ leads to a better performance for higher SNRs. This result for the STFT is also different than that obtained in Avargel's paper, where increasing $K$ led to a better performance for higher SNRs (fig. 9). This could be due to the RIR's used.
-
-We see that the SSBT has a better performance than the STFT for lower input SNRs for all $K \neq 1$, which outperformed all results obtained through the SSBT. For each $K$, the marker indicate the SNR value in which it is advantageous to use the STFT for higher SNRs, and the SSBT for lower ones.
+\noindent\textit{Case 1 -} In here: both $x[n]$ and $v[n]$ are white Gaussian noises; $L = \floor{\nicefrac{N}{2}}$; and we use a Hann window.
 
 \begin{figure}[H]
 	\centering
-	\input{figures/lineplot_ERLE.tex}
+	\input{figures/lineplot_ERLE_case1.tex}
 	\caption{ERLE lineplot.}
-	\label{fig:sec4:lineplot_erle}
+	\label{fig:sec4:lineplot_erle_case1}
 \end{figure}
+
+%With the STFT, we see that although using $K=1$ is better than using $K=0$ for higher SNRs, we also see that increasing $K$ further doesn't lead to a better output, no matter the SNR. This is different than what was achieved with the SSBT, where increasing $K$ leads to a better performance for higher SNRs. This result for the STFT is also different than that obtained in Avargel's paper, where increasing $K$ led to a better performance for higher SNRs (fig. 9). This could be due to the RIR's used.
+%
+%We see that the SSBT has a better performance than the STFT for lower input SNRs for all $K \neq 0$, which outperformed all results obtained through the SSBT. For each $K$, the marker indicate the SNR value in which it is advantageous to use the STFT for higher SNRs, and the SSBT for lower ones.
+
+\noindent\textit{Case 2 -} Now $x[n]$ is a male speech signal, and $v[n]$ is still a white Gaussian noise.
+
+\begin{figure}[H]
+	\centering
+	\input{figures/lineplot_ERLE_case2.tex}
+	\caption{ERLE lineplot.}
+	\label{fig:sec4:lineplot_erle_case2}
+\end{figure}
+
+\noindent\textit{Case 3 -} In this scenario, $x[n]$ is a white Gaussian noise, and $v[n]$ is a male speech signal.
+
+\begin{figure}[H]
+	\centering
+	\input{figures/lineplot_ERLE_case3.tex}
+	\caption{ERLE lineplot.}
+	\label{fig:sec4:lineplot_erle_case3}
+\end{figure}
+
+\noindent\textit{Case 4 -} Here, both signals are white Gaussian noise, but now $L = \floor{\nicefrac{N}{4}}$.
+
+\begin{figure}[H]
+	\centering
+	\input{figures/lineplot_ERLE_case4.tex}
+	\caption{ERLE lineplot.}
+	\label{fig:sec4:lineplot_erle_case4}
+\end{figure}
+
+\noindent\textit{Case 5 -} We go back to $L = \floor{\nicefrac{N}{2}}$, but now using a Hamming window instead of a Hann one.
+
+\begin{figure}[H]
+	\centering
+	\input{figures/lineplot_ERLE_case5.tex}
+	\caption{ERLE lineplot.}
+	\label{fig:sec4:lineplot_erle_case5}
+\end{figure}
+
+We see that in none of the proposed cases, the SSBT results outperformed the STFT ones. The only case in which they were matched was case 2, with $x[n]$ being a speech signal, but in that scenario the ERLE was of $-2.2\db$ or lower, therefore incorrectly modeling $d[n]$.
+
+%\noindent\textit{Case 6 -} Here we will use $L = \floor{\nicefrac{N}{4}}$ (from the successful case 4) with $v[n]$ as a male speech signal.
+%
+%\begin{figure}[H]
+%	\centering
+%	\input{figures/lineplot_ERLE_case6.tex}
+%	\caption{ERLE lineplot.}
+%	\label{fig:sec4:lineplot_erle_case6}
+%\end{figure}
+%
+%\noindent\textit{Case 7 -} Here we will use $L = \floor{\nicefrac{N}{4}}$ (from the successful case 4) with a Hamming window.
+%
+%\begin{figure}[H]
+%	\centering
+%	\input{figures/lineplot_ERLE_case7.tex}
+%	\caption{ERLE lineplot.}
+%	\label{fig:sec4:lineplot_erle_case7}
+%\end{figure}

@@ -121,7 +121,7 @@
 %END_FOLD
 
 \newlength{\wdtwenty}
-\setlength{\wdtwenty}{\widthof{$-20$}}
+\setlength{\wdtwenty}{\widthof{$-20.$}}
 %\setlength{\wdtwenty}{\widthof{-20}}
 \pgfplotsset{
     every colorbar global/.append style={
@@ -133,7 +133,7 @@
 \NewDocumentEnvironment{lineplot}{m O{}}{
 	\begin{axis}[
 		width=0.8\linewidth,
-		height=0.48\linewidth,
+		height=0.4\linewidth,
 		%
 %		xtick = {1, 2 ,..., 7},
 		xtick pos=bottom,
@@ -142,11 +142,11 @@
 		%
 		xlabel = {Input SNR (dB)},
 		ylabel = {#1},
-%		yticklabel style={text width=\wdtwenty, align=right},
-		ylabel style={yshift=-0.8\linewidth+0.8em},
+		yticklabel style={text width=\wdtwenty, align=right},
+		ylabel style={yshift=-0.8\linewidth+0.2em},
 		%
 		xmin = -40.5,
-		xmax = 20.5,
+		xmax = 40.5,
 		%
 %		legend pos={outer south},
 		%
@@ -164,7 +164,7 @@
 	]
 	\draw[ultra thin, dotted] (axis cs:\pgfkeysvalueof{/pgfplots/xmin},0) -- (axis cs:\pgfkeysvalueof{/pgfplots/xmax},0);
 }{
-	\end{axis}
+	\end{axis}\vspace*{-0.5em}
 }
 %END_FOLD
 
